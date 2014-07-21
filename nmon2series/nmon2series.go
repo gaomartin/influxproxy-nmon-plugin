@@ -134,11 +134,12 @@ func (nmon Nmon) convertTop() {
 }
 
 func Remove(s []string, items ...int) []string {
+	var out []string
 	sort.Sort(sort.Reverse(sort.IntSlice(items)))
 	for _, item := range items {
-		s = append(s[:item], s[item+1:]...)
+		out = append(s[:item], s[item+1:]...)
 	}
-	return s
+	return out
 }
 
 func (nmon Nmon) fixTop() {
