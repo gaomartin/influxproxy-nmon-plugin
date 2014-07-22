@@ -116,7 +116,7 @@ func (nmon Nmon) convertTop() {
 			}
 		}
 
-		header := Remove(top.Header, pidPos, commandPos)
+		header := remove(top.Header, pidPos, commandPos)
 
 		for _, row := range top.Body {
 			name := "TOP." + row[commandPos]
@@ -128,17 +128,18 @@ func (nmon Nmon) convertTop() {
 				}
 				nmon.Sections[name] = section
 			}
-			nmon.Sections[name].Body = append(nmon.Sections[name].Body, Remove(row, pidPos, commandPos))
+			nmon.Sections[name].Body = append(nmon.Sections[name].Body, remove(row, pidPos, commandPos))
 		}
 	}
 	delete(nmon.Sections, "TOP")
 }
 
-func Remove(s []string, items ...int) []string {
-	var out []string
+func remove(s []string, items ...int) []string {
+	out := s
 	sort.Sort(sort.Reverse(sort.IntSlice(items)))
 	for _, item := range items {
-		out = append(s[:item], s[item+1:]...)
+		tmp := append(out[:item], out[item+1:]...)
+		out = tmp
 	}
 	return out
 }
