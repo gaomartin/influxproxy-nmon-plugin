@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/influxdb/influxdb-go"
+	influxdb "github.com/influxdb/influxdb/client"
 )
 
 const timePattern = "15:04:05,02-Jan-2006"
