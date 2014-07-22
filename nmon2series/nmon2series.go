@@ -3,6 +3,7 @@ package nmon2series
 import (
 	"errors"
 	"sort"
+	"strconv"
 	"strings"
 	"time"
 
@@ -62,9 +63,9 @@ func (nmon Nmon) getSectionsAsSeries(prefix string) (series []*influxdb.Series) 
 					Columns: []string{"time", "value"},
 				}
 				for _, row := range section.Body {
-					t := nmon.Snapshots[row[0]].Unix()
-					value := row[i]
-					if value != "" {
+					t := nmon.Snapshots[row[0]].Unix() * 1000
+					value, err := strconv.ParseFloat(row[i], 64)
+					if err == nil {
 						out.Points = append(out.Points, []interface{}{t, value})
 					}
 				}
@@ -86,7 +87,7 @@ func (nmon Nmon) getMessagesAsSeries(prefix string) (series []*influxdb.Series) 
 			}
 		}
 	}
-	timestamp := t.Unix()
+	timestamp := t.Unix() * 1000
 
 	for name, message := range nmon.Messages {
 		out := &influxdb.Series{
