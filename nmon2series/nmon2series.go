@@ -134,14 +134,14 @@ func (nmon Nmon) convertTop() {
 	delete(nmon.Sections, "TOP")
 }
 
-func remove(s []string, items ...int) []string {
-	out := s
+func remove(s []string, items ...int) (out []string) {
+	out = append(out, s...)
 	sort.Sort(sort.Reverse(sort.IntSlice(items)))
 	for _, item := range items {
 		tmp := append(out[:item], out[item+1:]...)
 		out = tmp
 	}
-	return out
+	return
 }
 
 func (nmon Nmon) fixTop() {
