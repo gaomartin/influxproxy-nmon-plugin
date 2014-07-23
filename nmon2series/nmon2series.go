@@ -24,8 +24,8 @@ type Nmon struct {
 	Hostname  string
 }
 
-func NewNmon(data string) (*Nmon, error) {
-	data = strings.Replace(data, "%", "Percent", -1)
+func NewNmon(in []byte) (*Nmon, error) {
+	data := strings.Replace(string(in), "%", "Percent", -1)
 	nmon := &Nmon{}
 
 	nmon.Sections = nmon.getSections(data)

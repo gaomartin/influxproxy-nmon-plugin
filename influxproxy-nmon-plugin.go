@@ -38,7 +38,7 @@ func (f Functions) Run(in plugin.Request) plugin.Response {
 		ignoreText = true
 	}
 
-	nmon, err := nmon2series.NewNmon(string(in.Body))
+	nmon, err := nmon2series.NewNmon(in.Body)
 	if err != nil {
 		return plugin.Response{
 			Series: nil,
